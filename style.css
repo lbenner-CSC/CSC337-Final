@@ -1,0 +1,128 @@
+body {
+	margin: 0;
+	background-color: lightslategrey;
+	position: absolute;
+}
+
+html { overflow-y: scroll; }
+
+
+
+label, input, button{
+	display: block;
+	margin-top: 10px;
+	vertical-align: center;
+	margin-left: 32.5%;
+}
+
+input{
+	padding: 10px;
+	box-shadow:0 0 10px 4px rgba(0,0,0,0.06);
+	border-radius:10px;
+}
+
+.headers{
+	display: block;
+	margin-top: 10px;
+	vertical-align: center;
+	margin-left: 32.5%;
+}
+		
+#createUser {
+	position: fixed;
+	color: darkred;
+	top: 10%;
+	border: 2px dotted palevioletred;
+	background-color: lightskyblue;
+	vertical-align: middle;
+	left: 35%;
+	width: 500px;
+	bottom: 20px;
+}
+
+#logoHeader{
+	position: fixed;
+	top: 0px;
+	margin-top: 0;
+	left: 45%;
+	font-family: "Brush Script MT", cursive;
+	font-size: 32pt;
+	color: darkred;
+	z-index: 3;
+}
+
+img {
+	width: 200px;
+	top: 2px;
+	bottom: 0;
+	border: 2px solid black;
+}
+
+#sidebar {
+	position: fixed;
+	border: 2px solid black;
+	right: 78%;
+	top: 10%;
+	bottom: 20px;
+	left: 2px;
+	background-color: black;
+	color: white;
+}
+
+#games {
+	position: fixed;
+	border: 2px solid black;
+	left: 24%;
+	top: 10%;
+	bottom: 20px;
+	right: 40px
+}
+
+#slot {
+	position: fixed;
+	top: 12%;
+	left: 315px;
+}
+
+#slotLink {
+	position: fixed;
+	margin-top: 2px;
+	background-color: grey;
+	color: black;
+	left: 375px
+}
+
+#bj {
+	position: fixed;
+	top: 12%;
+	left: 540px;	
+}
+
+#bjLink {
+	position: fixed;
+	margin-top: 2px;
+	background-color: grey;
+	color: black;
+	left: 600px
+}
+
+#roul {
+	position: fixed;
+	top: 12%;
+	left: 765px;	
+}
+
+#roulLink {
+	position: fixed;
+	margin-top: 2px;
+	background-color: grey;
+	color: black;
+	left: 825px
+}
+
+
+
+
+
+
+
