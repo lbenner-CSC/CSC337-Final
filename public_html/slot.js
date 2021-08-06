@@ -44,9 +44,9 @@ class SlotImage {
 	}
 }
 
-var img1 = new SlotImage(70, imgs[1]);
+var img1 = new SlotImage(70, imgs[2]);
 var img2 = new SlotImage(200, imgs[2]);
-var img3 = new SlotImage(330, imgs[3]);
+var img3 = new SlotImage(330, imgs[2]);
 
 function animate() {
 	con.clearRect(0, 0, canvas.width, canvas.height);
@@ -74,11 +74,16 @@ function newSpin() {
 	img1 = new SlotImage(70, imgs[ran1]);
 	img2 = new SlotImage(200, imgs[ran2]);
 	img3 = new SlotImage(330, imgs[ran3]);
-	if(ran1 == ran2) {
+	if(ran1 == ran2 && ran1 != ran3) {
 		addMoney(1500);
+		let audio = new Audio('./media/jackpot.mp3');
+		audio.play();
+		updatePlayer();
 	} else if( ran1 == ran2 && ran1 == ran3) {
 		addMoney(10000);
-		
+		let audio = new Audio('./media/jackpot.mp3');
+		audio.play();
+		updatePlayer();
 	}
 }
 
@@ -93,7 +98,7 @@ function addMoney(x) {
 		method: 'POST',
 		data: {user: userObj},
 		success: function( result ) {
-			
+			updatePlayer();
 		}
 	});
 }
@@ -101,6 +106,41 @@ function addMoney(x) {
 function returnHome() {
 	window.location = "home.html";
 }
+function updatePlayer() {
+		$.ajax({
+		url: '/updatePlayer',
+		method: 'GET',
+		success: function(result) {
+			console.log(result);
+			let user = JSON.parse(result);
+			let userText = $('#currUser');
+			userText.html(user.username);
+			let moneyText = $('#currMoney');
+			moneyText.html('Your Balance: $'+ user.money);
+			moneyText = $('#currBalance');
+			moneyText.html('Your Balance: $'+ user.money);
+			
+		}
+	});
+	
+}
 
-
+setInterval(updatePlayerList, 30000);
+updatePlayerList();
+updatePlayer();
+function updatePlayerList() {
+	$.ajax({
+		url: '/playerList',
+		method: 'GET',
+		success: function(result) {
+			console.log(result);
+			let users = result;
+			let userText = $('#otherUsers');
+			userText.html("Currently Online Users: " + users);
+			
+			
+		}
+	});
+	
+}
 

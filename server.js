@@ -96,15 +96,8 @@ app.post("/login", async (req, res) => {
 		bcrypt.compare(body.password, check.password, function (err, result) {
 			if (result) {
 				let now = new Date();
-				let found = 0;
-				for (i = 0; i < loggedIn.length; i++) {
-					if (loggedIn[i].username == body.username) {
-						found = 1;
-					}
-				}
-				if (found == 0) {
-					loggedIn.push({username: body.username, expire : Date.now() + 300000});
-				}
+				loggedIn.push({username: body.username, expire : Date.now() + 300000});
+				
 				res.cookie('login', {user: body.username, money: check.money}, {maxAge: 300000});
 				res.send("Success");
 			  } else {
@@ -127,6 +120,7 @@ app.post('/addMoney/', (req, res) => {
 				let body = JSON.parse(req.body.user);
 				player.money += body.amount;
 				player.save();
+				res.send("success");
 			}
 			else {
 				res.send("Error");
