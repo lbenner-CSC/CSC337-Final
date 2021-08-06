@@ -78,19 +78,6 @@ function returnHome() {
 	window.location = "home.html";
 }
 
-function addMoney(x) {
-	let userObj = {amount: x};
-	userObj = JSON.stringify(userObj);
-	console.log(userObj);
-	$.ajax({
-		url:'/addMoney',
-		method: 'POST',
-		data: {user: userObj},
-		success: function( result ) {
-			updatePlayer();
-		}
-	});
-}
 
 function startblackjack(){
     document.getElementById('btnStart').value = 'Restart';
@@ -285,6 +272,7 @@ function hitMe(){
 function check(){
     if (players[1].Points > 21){
     	document.getElementById('status').innerHTML = 'HOUSE WINS :(';
+		addMoney(-200);
     	document.getElementById('status').style.display = "inline-block";
     }
 }
@@ -305,11 +293,13 @@ function dealerTurn(){
 		if(players[0].Points > players[1].Points){
 			console.log(players[0].Points);
 			document.getElementById('status').innerHTML = 'HOUSE WINS :(';
+			addMoney(-200);
 			document.getElementById("status").style.display = "inline-block";
 		}
 		else if(players[0].Points < players[1].Points){
 			console.log(players[0].Points);
 			document.getElementById('status').innerHTML = 'YOU WON';
+			addMoney(200);
 			document.getElementById("status").style.display = "inline-block";
 		} else{
 			console.log(players[0].Points);
@@ -331,17 +321,20 @@ function dealerHit(){
     	if (players[0].Points > 21 && players[1].Points <= 21){
     		console.log(players[0].Points);
     		document.getElementById('status').innerHTML = 'YOU WON';
+			addMoney(200);
     		document.getElementById("status").style.display = "inline-block";
     		break;
     	}
     	else if(players[0].Points <= 21 && players[0].Points > players[1].Points){
     		document.getElementById('status').innerHTML = 'HOUSE WINS :(';
+			addMoney(-200);
     		document.getElementById("status").style.display = "inline-block";
     		console.log(players[0].Points);
     		break;
     	}
     	else if(players[0].Points <= 21 && players[0].Points < players[1].Points){
     		document.getElementById('status').innerHTML = 'YOU WON';
+			addMoney(200);
     		document.getElementById("status").style.display = "inline-block";
     		console.log(players[0].Points);
     		break;
@@ -354,4 +347,56 @@ function dealerHit(){
     	}
 	}
     
+}
+
+function addMoney(x) {
+	let userObj = {amount: x};
+	userObj = JSON.stringify(userObj);
+	console.log(userObj);
+	$.ajax({
+		url:'/addMoney',
+		method: 'POST',
+		data: {user: userObj},
+		success: function( result ) {
+			updatePlayer();
+		}
+	});
+}
+
+function updatePlayer() {
+		$.ajax({
+		url: '/updatePlayer',
+		method: 'GET',
+		success: function(result) {
+			console.log(result);
+			let user = JSON.parse(result);
+			let userText = $('#currUser');
+			userText.html(user.username);
+			let moneyText = $('#currMoney');
+			moneyText.html('Your Balance: $'+ user.money);
+			moneyText = $('#currBalance');
+			moneyText.html('Your Balance: $'+ user.money);
+			
+		}
+	});
+	
+}
+
+setInterval(updatePlayerList, 30000);
+updatePlayerList();
+updatePlayer();
+function updatePlayerList() {
+	$.ajax({
+		url: '/playerList',
+		method: 'GET',
+		success: function(result) {
+			console.log(result);
+			let users = result;
+			let userText = $('#otherUsers');
+			userText.html("Currently Online Users: " + users);
+			
+			
+		}
+	});
+	
 }

@@ -57,7 +57,7 @@ function updatePlayer() {
 			let userText = $('#currUser');
 			userText.html(user.username);
 			let moneyText = $('#currMoney');
-			moneyText.html('Your Balance: '+ user.money);
+			moneyText.html('Your Balance: $'+ user.money);
 			
 		}
 	});

@@ -50,3 +50,8 @@ function addUser() {
 	
 	
 }
+
+
+function toHelpPage() {
+	window.location = "help.html";
+}
