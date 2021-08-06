@@ -144,9 +144,9 @@ app.post("/login", async (req, res) => {
 		bcrypt.compare(body.password, check.password, function (err, result) {
 			if (result) {
 				let now = new Date();
-				loggedIn.push({username: body.username, expire : Date.now() + 300000});
+				loggedIn.push({username: body.username, expire : Date.now() + 3000000});
 				
-				res.cookie('login', {user: body.username, money: check.money}, {maxAge: 300000});
+				res.cookie('login', {user: body.username, money: check.money}, {maxAge: 3000000});
 				res.send("Success");
 			  } else {
 				res.send("Invalid Password");
