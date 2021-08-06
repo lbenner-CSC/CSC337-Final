@@ -53,8 +53,7 @@ var Slot = mongoose.model('Slot', SlotSchema);
 
 var loggedIn = [];
 
-//UNCOMMENT THIS CODE TO POPULATE DATABASE
-/*let bjt = "B&L Blackjack";
+let bjt = "B&L Blackjack";
 	let bjd = "Play blackjack here for a chance at huge wins! Whoever is closer to 21 takes home all the money";
 	let deal = ["Jose", "Jack", "Jerry", "Jeffrey", "Jill", "Jeremy"];
 	let bjb = "./imgs/bj.jpeg";
@@ -92,10 +91,10 @@ var loggedIn = [];
 
 	slot = new Slot(slot);
 	slot.save();
-*/
 
-const hostname = '127.0.0.1';
-const port = 5000;
+
+const hostname = '143.198.141.194';
+const port = 80;
 
 app.use(express.urlencoded({extended: true})); 
 app.use(express.json());
