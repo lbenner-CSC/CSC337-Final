@@ -45,3 +45,31 @@ body {
 	border-radius:10px;
 	margin-left: 40px;
 }
+
+#betDragon {
+	position: fixed;
+	margin-right: 290px;
+	margin-top: 520px;
+	color: orange;
+	border: .5px solid darkblue;
+	width: 150px;
+	background-color: lightblue;
+}
+
+#betTiger {
+	position: fixed;
+	margin-left: 210px;
+	margin-top: 520px;
+	color: red;
+	border: .5px solid darkblue;
+	width: 150px;
+	background-color: lightblue;
+}
+
+
+
+
+
+
+
+

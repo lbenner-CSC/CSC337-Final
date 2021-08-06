@@ -57,7 +57,7 @@ var loggedIn = [];
 /*let bjt = "B&L Blackjack";
 	let bjd = "Play blackjack here for a chance at huge wins! Whoever is closer to 21 takes home all the money";
 	let deal = ["Jose", "Jack", "Jerry", "Jeffrey", "Jill", "Jeremy"];
-	let bjb = "bj.jpeg";
+	let bjb = "./imgs/bj.jpeg";
 	let bjp = "bj.html";
 
 	let bj = {title: bjt, 
@@ -72,8 +72,8 @@ var loggedIn = [];
 	let dtt = "Dragon Tiger";
 	let dtd = "Are you feeling firey like a dragon, or brave like a tiger? Bet on either dragon or tiger and whichever side draws higher wins BIG";
 	let dtdeal = ["Liam", "Lucas", "Levi", "Luna", "Luke", "Leo"];
-	let dtb = "bj.jpeg";
-	let dtp = "bj.html";
+	let dtb = "./imgs/dtB.png";
+	let dtp = "dt.html";
 
 	let dt = {title: dtt, 
 		description: dtd,

@@ -78,7 +78,7 @@ function nextHandDragon() {
 	let ran1 = Math.floor(Math.random() * 25);
 	let ran2 = Math.floor(Math.random() * 25);
 	img1 = new Card(100, 800, imgs[ran1]);
-	img2 = new Card(300, -200, img[ran2]);
+	img2 = new Card(300, -200, imgs[ran2]);
 	
 	if (ran1 > 12) {
 		ran1 -= 12;
@@ -96,8 +96,8 @@ function nextHandDragon() {
 function nextHandTiger() {
 	let ran1 = Math.floor(Math.random() * 25);
 	let ran2 = Math.floor(Math.random() * 25);
-	img1 = new Card(150, 800, imgs[ran1]);
-	img2 = new Card(350, -200, img[ran2]);
+	img1 = new Card(100, 800, imgs[ran1]);
+	img2 = new Card(300, -200, imgs[ran2]);
 	
 	if (ran1 > 12) {
 		ran1 -= 12;
