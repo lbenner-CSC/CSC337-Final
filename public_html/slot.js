@@ -98,5 +98,9 @@ function addMoney(x) {
 	});
 }
 
+function returnHome() {
+	window.location = "home.html";
+}
+
 
 

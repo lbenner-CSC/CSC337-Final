@@ -9,10 +9,36 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	background-image: url("./imgs/slotBack.jpeg")
 }
 #canvas1 {
 	width: 500px;
 	height: 500px;
 	border: 1px solid black;
 	background-image: url("./imgs/fruitB.png");
+}
+
+#currBalance {
+	position: fixed;
+	margin-right: 350px;
+	margin-top: 470px;
+	color: darkblue;
+	border: .5px solid darkblue;
+	width: 150px;
+	background-color: lightblue;
+}
+
+#sidebar {
+	position: fixed;
+	border: 2px solid black;
+	right: 78%;
+	top: 7%;
+	bottom: 20px;
+	left: 40px;
+	background-color: black;
+	color: white;
+}
+
+#return {
+	margin-top: 10px;
 }
