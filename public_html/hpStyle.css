@@ -27,9 +27,10 @@ body {
     width: 50%;
     text-align: center;
     background-color: lightblue;
+    overflow-y: scroll;
 
 }
 
-#title{
+.title{
     color: red;
 }
