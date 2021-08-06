@@ -29,13 +29,21 @@ var TableGameSchema = new Schema(// Table Games
 {	title: String, 
 	description: String,
 	dealers: [],
-	javascript: String
+	background: String,
+	page: String
 });
 var SlotSchema = new Schema(
 {	title: String, 
 	description: String,
-	javascript: String
+	background: String,
+	page: String
 });
+
+;
+
+
+
+
 
 var Table = mongoose.model('Table', TableGameSchema );
 
@@ -45,6 +53,46 @@ var Slot = mongoose.model('Slot', SlotSchema);
 
 var loggedIn = [];
 
+//UNCOMMENT THIS CODE TO POPULATE DATABASE
+/*let bjt = "B&L Blackjack";
+	let bjd = "Play blackjack here for a chance at huge wins! Whoever is closer to 21 takes home all the money";
+	let deal = ["Jose", "Jack", "Jerry", "Jeffrey", "Jill", "Jeremy"];
+	let bjb = "bj.jpeg";
+	let bjp = "bj.html";
+
+	let bj = {title: bjt, 
+		description: bjd,
+		dealers: deal,
+		background: bjb,
+	page: bjp};
+
+	bj = new Table(bj);
+	bj.save();
+
+	let dtt = "Dragon Tiger";
+	let dtd = "Are you feeling firey like a dragon, or brave like a tiger? Bet on either dragon or tiger and whichever side draws higher wins BIG";
+	let dtdeal = ["Liam", "Lucas", "Levi", "Luna", "Luke", "Leo"];
+	let dtb = "bj.jpeg";
+	let dtp = "bj.html";
+
+	let dt = {title: dtt, 
+		description: dtd,
+		dealers: dtdeal,
+		background: dtb,
+	page: dtp};
+
+	dt = new Table(dt)
+	dt.save();
+
+	let fruit = "Fruit Bonanza";
+	let desc = "This slot is a total fruit bonanza! Click anywhere on the slot to spin. Match two symbols in the first two reels for a win. Match all three symbols for a HUGE JACKPOT!";
+	let backg = "./imgs/fruitB.png";
+
+	let slot = {title: fruit, description: desc, background: backg, page: "slot.html"};
+
+	slot = new Slot(slot);
+	slot.save();
+*/
 
 const hostname = '127.0.0.1';
 const port = 5000;
@@ -203,9 +251,18 @@ app.get('/playerList', (req, res) => {
 });
 
 
+app.get('/slot', (req, res) => {
+	Slot.find().exec(function(error, results) {
+		res.send(JSON.stringify(results[0]));
+	});
+});
 
-
-
+app.get('/tables', (req, res) => {
+	Table.find().exec(function(error, results) {
+		let result = {first: results[0], second: results[1]};
+		res.send(JSON.stringify(result));
+	});
+});
 
 
 
