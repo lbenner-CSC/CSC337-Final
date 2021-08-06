@@ -1,0 +1,35 @@
+html { overflow-y: scroll; }
+
+body {
+    margin: 0;
+    background-color: lightslategrey;
+    position: absolute;
+    background-image: url("./imgs/homeBack.jpeg");
+    background-size: 100%;
+    height: 100%;
+}
+
+
+#header{
+    margin: 15px;
+    height: 10%;
+    width: 20%;
+    margin-left: 500px;
+}
+
+#Description{
+    position: fixed;
+    border: 2px solid black;
+    background-color: white;
+    margin-left: 300px;
+    top: 25%;
+    height: 70%;
+    width: 50%;
+    text-align: center;
+    background-color: lightblue;
+
+}
+
+#title{
+    color: red;
+}
