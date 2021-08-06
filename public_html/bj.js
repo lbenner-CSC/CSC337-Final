@@ -1,7 +1,13 @@
+/*
+ Program: bj.js
+ Description: This program creates a deck and simulates a single player
+ blackjack game between a person and the house
+*/
 var suits = ["red", "black"];
 var values = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
 var players = new Array();
 
+//Creates the deck and gives each card its need weight
 function createDeck(){
     deck = new Array();
     for (var i = 0 ; i < values.length; i++){
@@ -20,6 +26,7 @@ function createDeck(){
     return deck;
 }
 
+//shuffles the deck randomly
 function shuffle(deck){
 	console.log(deck);
 	for (var i = 0; i < 1000; i++){
@@ -32,6 +39,7 @@ function shuffle(deck){
 	}
 }
 
+//Creates the dealer and the player
 function createPlayers(num){
     players = new Array();
     for(var i = 1; i <= num; i++){
@@ -48,6 +56,7 @@ function createPlayers(num){
     }
 }
 
+//Creates the players UI
 function createPlayersUI(){
     document.getElementById('players').innerHTML = '';
     for(var i = 0; i < players.length; i++){
@@ -74,11 +83,12 @@ function createPlayersUI(){
     }
 }
 
+
 function returnHome() {
 	window.location = "home.html";
 }
 
-
+//Starts the blackjack game calling all the needed methods
 function startblackjack(){
     document.getElementById('btnStart').value = 'Restart';
     document.getElementById("status").style.display="none";
@@ -91,6 +101,7 @@ function startblackjack(){
     document.getElementById('player_' + 1).classList.add('active');
 }
 
+//Deals cards to the players and makes sure not to show one of houses cards
 function dealHands(){
 	var card1 = deck.pop();
 	players[0].Hand.push(card1);
@@ -114,6 +125,7 @@ function dealHands(){
 
 }
 
+//retrieves the players points
 function getPoints(player){
     var points = 0;
     for(var i = 0; i < players[player].Hand.length; i++){
@@ -123,6 +135,7 @@ function getPoints(player){
     return points;
 }
 
+//updates the players points
 function updatePoints(){
     for (var i = 0 ; i < players.length; i++){
         getPoints(i);
@@ -130,15 +143,18 @@ function updatePoints(){
     }
 }
 
+//updates the deck length
 function updateDeck(){
     document.getElementById('deckcount').innerHTML = deck.length;
 }
 
+//Shows the cards requested
 function renderCard(card, player){
     var hand = document.getElementById('hand_' + player);
     hand.appendChild(getCardUI(card, player));
 }
 
+//Gets the correct image for the corresponding card
 function getCardUI(card, player){
 	if(player == 3){
 		var toReturn = document.getElementById('faceDown');
@@ -258,6 +274,7 @@ function getCardUI(card, player){
     return toReturn;
 }
 
+//Adds a card to the player
 function hitMe(){
     var card = deck.pop();
     players[1].Hand.push(card);
@@ -269,6 +286,7 @@ function hitMe(){
     check();
 }
 
+//checks to see if player is over 21
 function check(){
     if (players[1].Points > 21){
     	document.getElementById('status').innerHTML = 'HOUSE WINS :(';
@@ -277,13 +295,14 @@ function check(){
     }
 }
 
+//means its the dealers turn
 function stay(){
 	document.getElementById('player_' + 1).classList.remove('active');
 	document.getElementById('player_' + 0).classList.add('active');
     dealerTurn();
 }
 
-
+//Dealer hits if needed or stands and compares points to the player
 function dealerTurn(){
 	var card = players[0].Hand[1];
 	getCardUI(card, 3);
@@ -312,6 +331,7 @@ function dealerTurn(){
 	}
 }
 
+//The dealer hits and checks to see if who won
 function dealerHit(){
 	while(players[0].Points < 17){
 		var card = deck.pop();
@@ -349,6 +369,7 @@ function dealerHit(){
     
 }
 
+//adds money to the user
 function addMoney(x) {
 	let userObj = {amount: x};
 	userObj = JSON.stringify(userObj);
@@ -363,6 +384,7 @@ function addMoney(x) {
 	});
 }
 
+//Updates the players current balance 
 function updatePlayer() {
 		$.ajax({
 		url: '/updatePlayer',
