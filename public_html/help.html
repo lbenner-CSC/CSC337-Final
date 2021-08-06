@@ -7,10 +7,16 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
+	<script type="text/javascript">
+		function returnHP(){
+			window.location = "home.html";
+		}
+	</script>
 	<div id="header">
 		<img src="./imgs/banner.png" height="100px" width="200px">
 	</div>
 	<div id="Description">
+		<button onclick="returnHP()">Return to Homepage</button>
 		<h2 class="title">About Us</h2>
 		<p>Here at B & L's games, you have a variety of of different games to choose from. You can try and see if the fruits line up for you at B&L's slots. you could also test your card luck with either some games of blackjack or Dragon Tiger. All you have to do is create an account and login!</p>
 		<h2 class="title">How the Games Work</h2>
@@ -22,6 +28,7 @@
 
 		<h3 id="dragonTiger">Dragon Tiger</h3>
 		<p>Blackjack might not be your card game. If not then B&L Games has Dragon Tiger! Here you can choose between either dragon or tiger and if the card you choose is higher than the other one, you win.</p>
+		<button onclick="returnHP()">Return to Homepage</button>
 	</div>
 </body>
 </html>
