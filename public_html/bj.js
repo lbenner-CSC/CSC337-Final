@@ -1,6 +1,7 @@
-var suits = ["spades", "diamonds", "clubs", "hearts"];
+var suits = ["red", "black"];
 var values = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
 var players = new Array();
+var currentPlayer = 0;
 
 function createDeck(){
     deck = new Array();
@@ -17,7 +18,6 @@ function createDeck(){
             deck.push(card);
         }
     }
-    console.log(deck);
     return deck;
 }
 
@@ -36,9 +36,16 @@ function shuffle(deck){
 function createPlayers(num){
     players = new Array();
     for(var i = 1; i <= num; i++){
-        var hand = new Array();
-        var player = { Name: 'Player ' + i, ID: i, Points: 0, Hand: hand };
-        players.push(player);
+    	if (i == 1){
+    		var hand = new Array();
+        	var player = { Name: 'Dealer', ID: i, Points: 0, Hand: hand };
+        	players.push(player);
+    	}
+    	else{
+    		var hand = new Array();
+        	var player = { Name: 'YOU', ID: i, Points: 0, Hand: hand };
+        	players.push(player);
+    	}
     }
 }
 
@@ -62,6 +69,24 @@ function createPlayersUI(){
         div_player.appendChild(div_points);
         document.getElementById('players').appendChild(div_player);
     }
+}
+
+function returnHome() {
+	window.location = "home.html";
+}
+
+function addMoney(x) {
+	let userObj = {amount: x};
+	userObj = JSON.stringify(userObj);
+	console.log(userObj);
+	$.ajax({
+		url:'/addMoney',
+		method: 'POST',
+		data: {user: userObj},
+		success: function( result ) {
+			updatePlayer();
+		}
+	});
 }
 
 function startblackjack(){
@@ -114,24 +139,131 @@ function renderCard(card, player){
 }
 
 function getCardUI(card){
-    var el = document.createElement('div');
-    el.className = 'card';
-    el.innerHTML = card.Suit + ' ' + card.Value;
-    return el;
+    var toReturn = document.createElement('img');
+    if(card.Suit == "black"){
+    	if(card.Value == "A"){
+    		toReturn.src = "./imgs/Acard.png";
+    	}
+    	else if(card.Value == "K"){
+    		toReturn.src = "./imgs/Kcard.png";
+    	}
+
+    	else if(card.Value == "Q"){
+    		toReturn.src = "./imgs/Qcard.png";
+    	}
+
+    	else if(card.Value == "J"){
+    		toReturn.src = "./imgs/Jcard.png";
+    	}
+
+    	else if(card.Value == "10"){
+    		toReturn.src = "./imgs/10card.png";
+    	}
+
+    	else if(card.Value == "9"){
+    		toReturn.src = "./imgs/9card.png";
+    	}
+
+    	else if(card.Value == "8"){
+    		toReturn.src = "./imgs/8card.png";
+    	}
+
+    	else if(card.Value == "7"){
+    		toReturn.src = "./imgs/7card.png";
+    	}
+
+    	else if(card.Value == "6"){
+    		toReturn.src = "./imgs/6card.png";
+    	}
+
+    	else if(card.Value == "5"){
+    		toReturn.src = "./imgs/5card.png";
+    	}
+
+    	else if(card.Value == "4"){
+    		toReturn.src = "./imgs/4card.png";
+    	}
+
+    	else if(card.Value == "3"){
+    		toReturn.src = "./imgs/3card.png";
+    	}
+
+    	else if(card.Value == "2"){
+    		toReturn.src = "./imgs/2card.png";
+    	}
+    }
+
+    else if (card.Suit == "red"){
+        if(card.Value == "A"){
+    		toReturn.src = "./imgs/Ared.png";
+    	}
+    	else if(card.Value == "K"){
+    		toReturn.src = "./imgs/Kred.png";
+    	}
+
+    	else if(card.Value == "Q"){
+    		toReturn.src = "./imgs/Qred.png";
+    	}
+
+    	else if(card.Value == "J"){
+    		toReturn.src = "./imgs/Jred.png";
+    	}
+
+    	else if(card.Value == "10"){
+    		toReturn.src = "./imgs/10red.png";
+    	}
+
+    	else if(card.Value == "9"){
+    		toReturn.src = "./imgs/9red.png";
+    	}
+
+    	else if(card.Value == "8"){
+    		toReturn.src = "./imgs/8red.png";
+    	}
+
+    	else if(card.Value == "7"){
+    		toReturn.src = "./imgs/7red.png";
+    	}
+
+    	else if(card.Value == "6"){
+    		toReturn.src = "./imgs/6red.png";
+    	}
+
+    	else if(card.Value == "5"){
+    		toReturn.src = "./imgs/5red.png";
+    	}
+
+    	else if(card.Value == "4"){
+    		toReturn.src = "./imgs/4red.png";
+    	}
+
+    	else if(card.Value == "3"){
+    		toReturn.src = "./imgs/3red.png";
+    	}
+
+    	else if(card.Value == "2"){
+    		toReturn.src = "./imgs/2red.png";
+    	}
+    }
+    toReturn.className = 'card';
+    return toReturn;
 }
 
-var currentPlayer = 0;
+var currentPlayer = 2;
 function hitMe(){
     var card = deck.pop();
     players[currentPlayer].Hand.push(card);
     renderCard(card, currentPlayer);
     updatePoints();
     check();
+    console.log(players);
 }
 
 function check(){
     if (players[currentPlayer].Points > 21){
-    	document.getElementById('status').innerHTML = 'Player: ' + players[currentPlayer].ID + ' LOST';
+    	document.getElementById('status').innerHTML = players[currentPlayer].Name + ' LOST';
+    	document.getElementById('status').style.display = "inline-block";
+    	end();
     }
 }
 
@@ -158,5 +290,11 @@ function end(){
         score = players[i].Points;
     }
 
-    document.getElementById('status').innerHTML = 'Winner: Player ' + players[winner].ID;
+    if(players[winner].ID == 1){
+    	document.getElementById('status').innerHTML = 'OOPSIE HOUSE WINS';
+    } else{
+    	document.getElementById('status').innerHTML = 'YOU WIN';
+    }
+
+   
 }

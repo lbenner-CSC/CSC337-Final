@@ -5,8 +5,18 @@
 	<title>Blackjack</title>
 	<link rel="stylesheet" type="text/css" href="bjStyle.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="bj.js"></script>
 </head>
 <body>
+	<div id="sidebar">
+		<p id="currUser">Your Name: Example User</p>
+		<p id="currMoney">Your Money: $0</p>
+		<p id="otherUsers">Current Online Users:
+			gary2 (Money: $20),
+			larry4 (Money: $20)
+		</p>
+		<button id="return" onclick="returnHome()">Return to Homepage</button>
+	</div>
 	<div class="game">
      <div class="game">
             <h3>Blackjack</h3>
@@ -30,6 +40,5 @@
             <div class="clear"></div>
     </div>
 	</div>
-	<script src="bj.js" async defer></script>
 </body>
 </html>
