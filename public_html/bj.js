@@ -1,7 +1,6 @@
 var suits = ["red", "black"];
 var values = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
 var players = new Array();
-var currentPlayer = 0;
 
 function createDeck(){
     deck = new Array();
@@ -63,7 +62,11 @@ function createPlayersUI(){
         div_player.className = 'player';
         div_hand.id = 'hand_' + i;
 
-        div_playerid.innerHTML = players[i].ID;
+        if(i == 0){
+        	div_playerid.innerHTML = players[i].Name;
+        } else{
+        	div_playerid.innerHTML = players[i].Name;
+        }
         div_player.appendChild(div_playerid);
         div_player.appendChild(div_hand);
         div_player.appendChild(div_points);
@@ -92,25 +95,36 @@ function addMoney(x) {
 function startblackjack(){
     document.getElementById('btnStart').value = 'Restart';
     document.getElementById("status").style.display="none";
-    currentPlayer = 0;
     var deck = createDeck();
     shuffle(deck);
     createPlayers(2);
     createPlayersUI();
+    document.getElementById('points_' + 0).style.color = "white";
     dealHands();
-    document.getElementById('player_' + currentPlayer).classList.add('active');
+    document.getElementById('player_' + 1).classList.add('active');
 }
 
 function dealHands(){
-    for(var i = 0; i < 2; i++){
-      	for (var x = 0; x < players.length; x++){
-            var card = deck.pop();
-            players[x].Hand.push(card);
-            renderCard(card, x);
-            updatePoints();
-        }
-    }
-    updateDeck();
+	var card1 = deck.pop();
+	players[0].Hand.push(card1);
+	renderCard(card1, 0);
+
+	var card2 = deck.pop();
+	players[1].Hand.push(card2);
+	renderCard(card2, 1);
+
+	var card3 = deck.pop();
+	players[0].Hand.push(card3);
+	renderCard("c", 0);
+
+	var card4 = deck.pop();
+	players[1].Hand.push(card4);
+	renderCard(card4, 1);
+
+	updatePoints();
+	updateDeck();
+
+
 }
 
 function getPoints(player){
@@ -135,12 +149,20 @@ function updateDeck(){
 
 function renderCard(card, player){
     var hand = document.getElementById('hand_' + player);
-    hand.appendChild(getCardUI(card));
+    hand.appendChild(getCardUI(card, player));
 }
 
-function getCardUI(card){
-    var toReturn = document.createElement('img');
-    if(card.Suit == "black"){
+function getCardUI(card, player){
+	if(player == 3){
+		var toReturn = document.getElementById('faceDown');
+	} else{
+		var toReturn = document.createElement('img');
+	}
+    if (card == "c"){
+    	toReturn.src = "./imgs/cardBack.png"
+    	toReturn.id = 'faceDown';
+    }
+    else if(card.Suit == "black"){
     	if(card.Value == "A"){
     		toReturn.src = "./imgs/Acard.png";
     	}
@@ -249,52 +271,87 @@ function getCardUI(card){
     return toReturn;
 }
 
-var currentPlayer = 2;
 function hitMe(){
     var card = deck.pop();
-    players[currentPlayer].Hand.push(card);
-    renderCard(card, currentPlayer);
+    players[1].Hand.push(card);
+    if (players[1].Points > 21){
+    	return;
+    }
+    renderCard(card, 1);
     updatePoints();
     check();
-    console.log(players);
 }
 
 function check(){
-    if (players[currentPlayer].Points > 21){
-    	document.getElementById('status').innerHTML = players[currentPlayer].Name + ' LOST';
+    if (players[1].Points > 21){
+    	document.getElementById('status').innerHTML = 'HOUSE WINS :(';
     	document.getElementById('status').style.display = "inline-block";
-    	end();
     }
 }
 
 function stay(){
-    if (currentPlayer != players.length-1) {
-        document.getElementById('player_' + currentPlayer).classList.remove('active');
-        currentPlayer += 1;
-        document.getElementById('player_' + currentPlayer).classList.add('active');
-    }
-    else {
-        end();
-    }
+	document.getElementById('player_' + 1).classList.remove('active');
+	document.getElementById('player_' + 0).classList.add('active');
+    dealerTurn();
 }
 
-function end(){
-    var winner = -1;
-    var score = 0;
 
-    for(var i = 0; i < players.length; i++){
-        if (players[i].Points > score && players[i].Points < 22){
-            winner = i;
-        }
+function dealerTurn(){
+	var card = players[0].Hand[1];
+	getCardUI(card, 3);
+	document.getElementById('points_'+ 0).style.color = "black";
+	if (players[0].Points >= 17){
+		console.log(players[0].Points);
+		if(players[0].Points > players[1].Points){
+			console.log(players[0].Points);
+			document.getElementById('status').innerHTML = 'HOUSE WINS :(';
+			document.getElementById("status").style.display = "inline-block";
+		}
+		else if(players[0].Points < players[1].Points){
+			console.log(players[0].Points);
+			document.getElementById('status').innerHTML = 'YOU WON';
+			document.getElementById("status").style.display = "inline-block";
+		} else{
+			console.log(players[0].Points);
+			document.getElementById('status').innerHTML = 'PUSH';
+			document.getElementById("status").style.display = "inline-block";
+		}
+	}
+	else{
+		dealerHit();
+	}
+}
 
-        score = players[i].Points;
-    }
-
-    if(players[winner].ID == 1){
-    	document.getElementById('status').innerHTML = 'OOPSIE HOUSE WINS';
-    } else{
-    	document.getElementById('status').innerHTML = 'YOU WIN';
-    }
-
-   
+function dealerHit(){
+	while(players[0].Points < 17){
+		var card = deck.pop();
+    	players[0].Hand.push(card);
+    	renderCard(card, 0);
+    	updatePoints();
+    	if (players[0].Points > 21 && players[1].Points <= 21){
+    		console.log(players[0].Points);
+    		document.getElementById('status').innerHTML = 'YOU WON';
+    		document.getElementById("status").style.display = "inline-block";
+    		break;
+    	}
+    	else if(players[0].Points <= 21 && players[0].Points > players[1].Points){
+    		document.getElementById('status').innerHTML = 'HOUSE WINS :(';
+    		document.getElementById("status").style.display = "inline-block";
+    		console.log(players[0].Points);
+    		break;
+    	}
+    	else if(players[0].Points <= 21 && players[0].Points < players[1].Points){
+    		document.getElementById('status').innerHTML = 'YOU WON';
+    		document.getElementById("status").style.display = "inline-block";
+    		console.log(players[0].Points);
+    		break;
+    	}
+    	else if(players[0].Points <= 21 && players[0].Points == players[1].Points){
+    		document.getElementById('status').innerHTML = 'PUSH';
+    		document.getElementById("status").style.display = "inline-block";
+    		console.log(players[0].Points);
+    		break;
+    	}
+	}
+    
 }
