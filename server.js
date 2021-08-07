@@ -1,4 +1,4 @@
-/*AUTHOR: Logan Benner
+/*AUTHOR: Logan Benner And Bergen Kjeseth
 *Program: Final Project
 *File: server.js
 *Purpose: 
