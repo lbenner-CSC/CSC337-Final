@@ -1,6 +1,6 @@
 /*
 File: dt.js
-Author: Logan Benner
+Author: Logan Benner and Bergen Kjeseth
 Purpose: This file runs all the logic and display for dragon tiger. It sends ajax requests to manage player money and uses a canvas to display the graphics.
 */
 
