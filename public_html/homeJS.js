@@ -1,3 +1,7 @@
+/*
+File: homeJS.js
+Purpose: This gets the information of the current player, online players, then it gets the information for the current games in the database. It is done this way so that the games can change but our code can remain modular.
+*/
 
 
 updatePlayer();
@@ -6,6 +10,10 @@ updatePlayerList();
 setInterval(updatePlayerList, 30000);
 
 
+/*
+updatePlayerList:
+GETs and updates the online players information on screen. This needs to be called on an interval to keep the money up to date. 
+*/
 function updatePlayerList() {
 	$.ajax({
 		url: '/playerList',
@@ -23,7 +31,10 @@ function updatePlayerList() {
 }
 
 
-
+/*
+depositMoney:
+This function calls a get that tries to deposit money. It logs the result in the console to keep track of if it worked or not
+*/
 function depositMoney() {
 	$.ajax({
 		url: '/depositMoney',
@@ -46,7 +57,10 @@ function depositMoney() {
 
 
 
-
+/*
+updatePlayer:
+GETs and updates the current player information on screen. This needs to be called on an interval to keep the money up to date. 
+*/
 function updatePlayer() {
 		$.ajax({
 		url: '/updatePlayer',
@@ -66,6 +80,11 @@ function updatePlayer() {
 
 getSlots();
 
+
+/*
+getSlots: 
+This function gets the slot information and then stores it in the html by the ids. It only grabs one slot.
+*/
 function getSlots() {
 	$.ajax({
 		url: '/slot',
@@ -85,7 +104,15 @@ function getSlots() {
 	});
 	
 }
+
+
 getTables();
+
+/*
+getTables:
+This function gets the table games that are stored in the database and adds their information to the home page. 
+It only grabs the first two in the results so that the server can easily rotate the available table games.
+*/
 function getTables() {
 	$.ajax({
 		url: '/tables',
