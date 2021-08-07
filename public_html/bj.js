@@ -1,4 +1,5 @@
 /*
+ Author: Logan Benner and Bergen Kjeseth
  Program: bj.js
  Description: This program creates a deck and simulates a single player
  blackjack game between a person and the house
