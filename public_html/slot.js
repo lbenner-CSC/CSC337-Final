@@ -1,3 +1,11 @@
+/*
+File: slot.js
+Author: Logan Benner
+Purpose: This file creates, and animates the slot machine. It also displays user information and can change the balance of a player. 
+
+*/
+
+
 const canvas = document.getElementById('canvas1');
 var con = canvas.getContext("2d");
 canvas.width = 500;
@@ -28,6 +36,12 @@ canvas.addEventListener('mousedown', function(event) {
 	newSpin();
 });
 
+
+/*
+SlotImage: This is the image and position information for the slot machine.
+x: the x coordinate for the image to move down on.
+src: the Image object for the slot.
+*/
 class SlotImage {
 	constructor(x, src) {
 		this.x = x;
@@ -48,6 +62,11 @@ var img1 = new SlotImage(70, imgs[2]);
 var img2 = new SlotImage(200, imgs[2]);
 var img3 = new SlotImage(330, imgs[2]);
 
+
+/*
+This function animates the slot machine. 
+It clears the SlotImages from the previous frame and them draws them with the new information 
+*/
 function animate() {
 	con.clearRect(0, 0, canvas.width, canvas.height);
 	img1.update();
@@ -64,7 +83,10 @@ animate();
 
 
 
-
+/*
+newSpin:
+This function randomly selects three images, removes $500 and then if 2 or more from the left reel match it adds the appropriate amount of money.
+*/
 function newSpin() {
 	addMoney(-500);
 	let ran1 = Math.floor(Math.random() * 7);
@@ -89,6 +111,11 @@ function newSpin() {
 
 
 
+/*
+addMoney(x)
+x: integer amount of money change, can be positive or negative
+This adds money to the current user by sending a post request with the amount change
+*/
 function addMoney(x) {
 	let userObj = {amount: x};
 	userObj = JSON.stringify(userObj);
@@ -103,9 +130,17 @@ function addMoney(x) {
 	});
 }
 
+
+//returns to home page
 function returnHome() {
 	window.location = "home.html";
 }
+
+
+/*
+updatePlayer:
+GETs and updates the current player information on screen. This needs to be called on an interval to keep the money up to date. 
+*/
 function updatePlayer() {
 		$.ajax({
 		url: '/updatePlayer',
@@ -125,9 +160,17 @@ function updatePlayer() {
 	
 }
 
+
 setInterval(updatePlayerList, 30000);
 updatePlayerList();
 updatePlayer();
+
+
+
+/*
+updatePlayer:
+GETs and updates the online players information on screen. This needs to be called on an interval to keep the money up to date. 
+*/
 function updatePlayerList() {
 	$.ajax({
 		url: '/playerList',
