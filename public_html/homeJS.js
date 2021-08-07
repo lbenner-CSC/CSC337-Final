@@ -1,4 +1,5 @@
 /*
+Author: Bergen Kjeseth and Logan Benner
 File: homeJS.js
 Purpose: This gets the information of the current player, online players, then it gets the information for the current games in the database. It is done this way so that the games can change but our code can remain modular.
 */
