@@ -1,3 +1,10 @@
+/*
+File: dt.js
+Author: Logan Benner
+Purpose: This file runs all the logic and display for dragon tiger. It sends ajax requests to manage player money and uses a canvas to display the graphics.
+*/
+
+
 const canvas = document.getElementById('canvas1');
 var con = canvas.getContext("2d");
 canvas.width = 500;
@@ -39,6 +46,11 @@ for (i = 0; i < imgs.length; i++) {
 
 
 
+
+/*
+This is the Card class. It stores the image for the card, the position, and the momentum / movement. 
+Constructor: X: static X coordinate, y: variable y coordinate, src: the Image object for the card. 
+*/
 class Card {
 	constructor(x,y, src) {
 		this.x = x;
@@ -61,6 +73,11 @@ class Card {
 var img1 = new Card(110, 800, imgs[12]);
 var img2 = new Card(290, -200, imgs[25]);
 
+
+/*
+This function animates dragon tiger. 
+It clears the previously created card, then draws a new one. 
+*/
 function animate() {
 	con.clearRect(0, 0, canvas.width, canvas.height);
 	img1.update();
@@ -73,7 +90,10 @@ function animate() {
 
 animate();
 
-
+/*
+nextHandDragon:
+This places a $500 bet on dragon, then selects and creates the new card objects. 
+*/
 function nextHandDragon() {
 	let ran1 = Math.floor(Math.random() * 25);
 	let ran2 = Math.floor(Math.random() * 25);
@@ -93,6 +113,12 @@ function nextHandDragon() {
 		addMoney(-500);
 	}
 }
+
+
+/*
+nextHandTiger:
+This places a $500 bet on tiger, then selects and creates the new card objects. 
+*/
 function nextHandTiger() {
 	let ran1 = Math.floor(Math.random() * 25);
 	let ran2 = Math.floor(Math.random() * 25);
@@ -117,7 +143,11 @@ function nextHandTiger() {
 
 
 
-
+/*
+addMoney(x)
+x: integer amount of money change, can be positive or negative
+This adds money to the current user by sending a post request with the amount change
+*/
 
 function addMoney(x) {
 	let userObj = {amount: x};
@@ -145,29 +175,10 @@ function returnHome() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/*
+updatePlayer:
+GETs and updates the current player information on screen. This needs to be called on an interval to keep the money up to date. 
+*/
 function updatePlayer() {
 		$.ajax({
 		url: '/updatePlayer',
@@ -187,6 +198,11 @@ function updatePlayer() {
 	
 }
 
+
+/*
+updatePlayer:
+GETs and updates the online players information on screen. This needs to be called on an interval to keep the money up to date. 
+*/
 setInterval(updatePlayerList, 30000);
 updatePlayerList();
 updatePlayer();
