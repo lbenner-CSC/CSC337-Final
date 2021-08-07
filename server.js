@@ -2,7 +2,8 @@
 *Program: Final Project
 *File: server.js
 *Purpose: 
- ---TODO---
+The purpose of this program is to host the server for B&L's Casino. It does this
+by utilizing many different modules
 */
 const express = require('express'); 
 const mongoose = require('mongoose');
@@ -99,7 +100,7 @@ const port = 80;
 app.use(express.urlencoded({extended: true})); 
 app.use(express.json());
 
-
+//Checks to see if the user is logged in.
 app.use('/home.html', (req, res, next) => {
 	let cookie = req.cookies.login;
 	if (cookie != undefined) {
@@ -114,7 +115,11 @@ app.listen(port, () =>
 console.log('App listening at http://localhost: ${port}'));
 
 
-
+/*
+This method creates a user once a user has signed up. It
+hashes the users password and stores it so the users password is 
+secure.
+*/
 app.post("/signup", async (req, res) => {
 	const body = JSON.parse(req.body.user);
 	console.log(req.body);
@@ -134,7 +139,11 @@ app.post("/signup", async (req, res) => {
 	}
   });
 
-
+/*
+This method logins in the user. It does this by comparing the users password
+with the hash password stored in the data base. Once the password is right, 
+a cookie is created for the user.
+*/
 app.post("/login", async (req, res) => {
     const body = JSON.parse(req.body.user);
     const check = await User.findOne({ username: body.username });
@@ -158,6 +167,10 @@ app.post("/login", async (req, res) => {
       res.send("Invalid Username");
     }
   });
+
+/*
+This method finds the current user and updates that users money.
+*/
 app.post('/addMoney/', (req, res) => {
 	let cookie = req.cookies.login;
 	if (cookie != undefined) {
@@ -184,7 +197,10 @@ app.post('/addMoney/', (req, res) => {
 
 
 
-
+/*
+This method checks if it has been 10 hours since the last deposit was made. It has then
+its deposits money for the user and updates the time data for that user.
+*/
 app.get('/depositMoney', (req, res) => {
 	let cookie = req.cookies.login;
 	if (cookie != undefined) {
@@ -214,7 +230,9 @@ app.get('/depositMoney', (req, res) => {
 	}
 });
 
-
+/*
+This method returns the current user logged in as a JSON string object.
+*/
 app.get('/updatePlayer', (req, res) => {
 	let cookie = req.cookies.login;
 	if (cookie != undefined) {
@@ -231,7 +249,9 @@ app.get('/updatePlayer', (req, res) => {
 	}
 });
 
-
+/*
+This method keeps an update of all the current players that are logged in to the website.
+*/
 app.get('/playerList', (req, res) => {
 	let toSend = '';
 	let now = new Date();
